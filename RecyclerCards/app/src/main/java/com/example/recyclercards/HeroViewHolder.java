@@ -12,7 +12,7 @@ import android.widget.TextView;
 public class HeroViewHolder extends RecyclerView.ViewHolder {
 
     CardView cv;
-    //ImageView portrait;
+    ImageView portrait;
     TextView name;
     TextView role;
     TextView difficulty_level;
@@ -20,7 +20,7 @@ public class HeroViewHolder extends RecyclerView.ViewHolder {
     public HeroViewHolder(View itemView) {
         super(itemView);
         cv = (CardView)itemView.findViewById(R.id.cv);
-        //portrait = (ImageView)itemView.findViewById(R.id.portrait);
+        portrait = (ImageView)itemView.findViewById(R.id.portrait);
         name = (TextView)itemView.findViewById(R.id.name);
         role = (TextView)itemView.findViewById(R.id.role);
         difficulty_level = (TextView)itemView.findViewById(R.id.difficulty_level);

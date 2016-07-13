@@ -17,17 +17,22 @@ import java.util.ArrayList;
  */
 public class HelperHero {
 
-    private ArrayList<Hero> heroes = new ArrayList<>();
+    public Hero[] FillMyArray() {
+        Hero[] heroes = new Hero[8];
 
-    public ArrayList fillMyArray() {
-        heroes.add(new Hero(/*R.drawable.genji_portrait,*/ "Genji", "Offense", "3"));
-        heroes.add(new Hero(/*R.drawable.bastion_portrait,*/ "Bastion", "Defense", "1"));
-        heroes.add(new Hero(/*R.drawable.dva_portrait,*/ "Dva", "Tank", "2"));
-        heroes.add(new Hero(/*R.drawable.lucio_portrait,*/ "Lúcio", "Support", "2"));
+        heroes[0] = new Hero(R.drawable.genji_portrait, "Genji", "Offense", "3");
+        heroes[1] = new Hero(R.drawable.bastion_portrait, "Bastion", "Defense", "1");
+        heroes[2] = new Hero(R.drawable.dva_portrait, "Dva", "Tank", "2");
+        heroes[3] = new Hero(R.drawable.lucio_portrait, "Lúcio", "Support", "2");
+        //
+        heroes[4] = new Hero(R.drawable.mccree_portrait, "McCree", "Offense", "2");
+        heroes[5] = new Hero(R.drawable.hanzo_portrait, "Hanzo", "Defense", "3");
+        heroes[6] = new Hero(R.drawable.reinhardt_portrait, "Reinhardt", "Tank", "1");
+        heroes[7] = new Hero(R.drawable.mercy_portrait, "Mercy", "Support", "1");
         return heroes;
     }
 
-    public ArrayList getJsonFromString(String imjson) {
+    public Hero[] GetJsonFromString(String imjson) {
 
 //        String imjson = "[\n" +
 //                "\t{\n" +
@@ -51,6 +56,7 @@ public class HelperHero {
 //                "\t\t\"difficulty_level\":\"2\"\n" +
 //                "\t}\n" +
 //                "]";
+        Hero[] heroes = new Hero[25];
 
         try {
             JSONArray jsonArray = new JSONArray(imjson);
@@ -62,7 +68,7 @@ public class HelperHero {
                 h.setRole(heroObject.getString("role"));
                 h.setDifficulty_level(heroObject.getString("difficulty_level"));
 
-                heroes.add(h);
+                heroes[i] = h;
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -70,7 +76,7 @@ public class HelperHero {
         return heroes;
     }
 
-    public ArrayList getJsonFromURL(URL[] myURL) {
+    public Hero[] GetJsonFromURL(URL[] myURL) {
         //array due to async task requirements
         HttpURLConnection conn = null;
         BufferedReader reader = null;
@@ -105,6 +111,6 @@ public class HelperHero {
         }
 
         String jsonString = buffer.toString();
-        return getJsonFromString(jsonString);
+        return GetJsonFromString(jsonString);
     }
 }

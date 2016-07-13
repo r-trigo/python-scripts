@@ -1,7 +1,5 @@
 package com.example.recyclercards;
 
-import android.media.Image;
-
 /**
  * Created by Seksu on 01/07/2016.
  */
@@ -13,11 +11,10 @@ public class Hero {
     private String difficulty_level;
 
     public Hero () {
-
     };
 
-    public Hero(/*int portrait,*/ String name, String role, String difficulty_level) {
-        //this.portrait = portrait;
+    public Hero(int portrait, String name, String role, String difficulty_level) {
+        this.portrait = portrait;
         this.name = name;
         this.role = role;
         this.difficulty_level = difficulty_level;

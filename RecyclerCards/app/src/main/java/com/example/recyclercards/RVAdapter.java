@@ -18,9 +18,9 @@ import java.util.ArrayList;
 
 public class RVAdapter extends RecyclerView.Adapter<HeroViewHolder> {
 
-    ArrayList<Hero> heroes;
+    Hero[] heroes;
 
-    RVAdapter (ArrayList<Hero> heroes) {
+    RVAdapter (Hero[] heroes) {
         this.heroes = heroes;
     }
 
@@ -34,15 +34,15 @@ public class RVAdapter extends RecyclerView.Adapter<HeroViewHolder> {
 
     @Override
     public void onBindViewHolder(HeroViewHolder heroViewHolder, int i) {
-        //heroViewHolder.portrait.setImageResource(heroes.get(i).getPortrait());
-        heroViewHolder.name.setText(heroes.get(i).getName());
-        heroViewHolder.role.setText(heroes.get(i).getRole());
-        heroViewHolder.difficulty_level.setText(heroes.get(i).getDifficulty_level());
+        heroViewHolder.portrait.setImageResource(heroes[i].getPortrait());
+        heroViewHolder.name.setText(heroes[i].getName());
+        heroViewHolder.role.setText(heroes[i].getRole());
+        heroViewHolder.difficulty_level.setText(heroes[i].getDifficulty_level());
     }
 
     @Override
     public int getItemCount() {
-        return heroes.size();
+        return heroes.length;
     }
 
     @Override

@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     Intent intent;
     Button viewHeroes;
     Button viewMap;
+    Button viewMap2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

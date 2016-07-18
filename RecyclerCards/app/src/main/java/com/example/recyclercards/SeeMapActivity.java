@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -12,6 +13,18 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.TileOverlay;
+import com.google.android.gms.maps.model.TileOverlayOptions;
+import com.google.maps.android.heatmaps.HeatmapTileProvider;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SeeMapActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -30,38 +43,65 @@ public class SeeMapActivity extends FragmentActivity implements OnMapReadyCallba
 
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-
     float radius2zoom(int radiusKM) {
         float radiusMI = (float) (radiusKM * 0.621371);
-        return Math.round(14-Math.log(radiusMI)/Math.log(2));
+        return Math.round(14 - Math.log(radiusMI) / Math.log(2));
+    }
+
+    private String jsonString = "[\n" +
+            "{\"lat\" : -37.1886, \"lng\" : 145.708 } ,\n" +
+            "{\"lat\" : -37.8361, \"lng\" : 144.845 } ,\n" +
+            "{\"lat\" : -38.4034, \"lng\" : 144.192 } ,\n" +
+            "{\"lat\" : -38.7597, \"lng\" : 143.67 } ,\n" +
+            "{\"lat\" : -36.9672, \"lng\" : 141.083 }\n" +
+            "]";
+
+    private ArrayList<LatLng> GetHeatPointsFromJSON(String imjson) {
+        int count = 0;
+        ArrayList<LatLng> list = new ArrayList<>(50);
+        try {
+            JSONArray jsonArray = new JSONArray(imjson);
+            count = jsonArray.length();
+            for (int i = 0; i < count; i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                double lat = jsonObject.optDouble("lat");
+                double lng = jsonObject.optDouble("lng");
+                list.add(i,new LatLng(lat,lng));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    private void addHeatMap() {
+        // Get the data: latitude/longitude positions of police stations.
+        ArrayList<LatLng> list = GetHeatPointsFromJSON(jsonString);
+
+        // Create a heat map tile provider, passing it the latlngs of the police stations.
+        HeatmapTileProvider mProvider = new HeatmapTileProvider.Builder().data(list).build();
+        // Add a tile overlay to the map, using the heat map tile provider.
+        TileOverlay mOverlay = mMap.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        LatLng NE = new LatLng(41.261602213,-8.39546205127);
-        LatLng SW = new LatLng(41.0299552058,-8.83148194873);
-        LatLngBounds campaignArea = new LatLngBounds(SW,NE);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(campaignArea,0));
-        mMap.moveCamera(CameraUpdateFactory.zoomTo(radius2zoom(10)));
+        LatLng NE = new LatLng(-35.1886, 144.708);
+        LatLng SW = new LatLng(-39.8361, 146.845);
+        LatLngBounds campaignArea = new LatLngBounds(SW, NE);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(campaignArea, 0));
+        //mMap.moveCamera(CameraUpdateFactory.zoomTo(radius2zoom(10)));
 
         button_yo = (Button) findViewById(R.id.button_yo);
         button_yo.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 LatLngBounds newBounds = mMap.getProjection().getVisibleRegion().latLngBounds;
-                Log.d("new bounds",""+newBounds);
+                Log.d("new bounds", "" + newBounds);
             }
         });
+
+        addHeatMap();
     }
 }

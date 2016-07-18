@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">RecyclerCards</string>
+    <string name="title_activity_see_map_xp">MyDesiredMap</string>
+    <string name="title_activity_maps_fragment">Map</string>
+    <string name="title_activity_maps_activityxp">Map</string>
 </resources>

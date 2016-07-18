@@ -9,18 +9,30 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+    Intent intent;
+    Button viewHeroes;
+    Button viewMap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Button viewHeroes = (Button) findViewById(R.id.button_viewHeroes);
-        final Intent intent = new Intent(MainActivity.this,ViewHeroesActivity.class);
-
+        viewHeroes = (Button) findViewById(R.id.button_viewHeroes);
         viewHeroes.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                intent = new Intent(MainActivity.this,ViewHeroesActivity.class);
                 startActivity(intent);
             }
         });
+
+        viewMap = (Button) findViewById(R.id.button_viewMap);
+        viewMap.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                intent = new Intent(MainActivity.this,SeeMapActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

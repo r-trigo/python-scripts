@@ -1,5 +1,13 @@
 package com.example.recyclercards;
 
+import android.content.Context;
+
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.TileOverlay;
+import com.google.android.gms.maps.model.TileOverlayOptions;
+import com.google.maps.android.heatmaps.HeatmapTileProvider;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -112,5 +120,29 @@ public class HelperHero {
 
         String jsonString = buffer.toString();
         return GetJsonFromString(jsonString);
+    }
+
+    public void addHeatMap (Context context, GoogleMap map) {
+        // Get the data: latitude/longitude positions of police stations.
+        ArrayList<LatLng> list = new ArrayList<>();
+        try {
+            InputStreamReader is = new InputStreamReader(context.getResources().openRawResource(R.raw.mobile_heatmap_points));
+            BufferedReader reader = new BufferedReader(is);
+            reader.readLine();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] row = line.split(",");
+                LatLng spot = new LatLng(Float.parseFloat(row[0]),Float.parseFloat(row[1]));
+                list.add(spot);
+            }
+
+            // Create a heat map tile provider, passing it the latlngs of the police stations.
+            HeatmapTileProvider mProvider = new HeatmapTileProvider.Builder().data(list).build();
+            // Add a tile overlay to the map, using the heat map tile provider.
+            TileOverlay mOverlay = map.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
+
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

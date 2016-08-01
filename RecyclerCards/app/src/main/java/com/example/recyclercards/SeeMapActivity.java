@@ -23,6 +23,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +50,8 @@ public class SeeMapActivity extends FragmentActivity implements OnMapReadyCallba
         float radiusMI = (float) (radiusKM * 0.621371);
         return Math.round(14 - Math.log(radiusMI) / Math.log(2));
     }
+
+
 
     private String jsonString = "[\n" +
             "{\"lat\" : -37.1886, \"lng\" : 145.708 } ,\n" +
@@ -74,15 +79,7 @@ public class SeeMapActivity extends FragmentActivity implements OnMapReadyCallba
         return list;
     }
 
-    private void addHeatMap() {
-        // Get the data: latitude/longitude positions of police stations.
-        ArrayList<LatLng> list = GetHeatPointsFromJSON(jsonString);
 
-        // Create a heat map tile provider, passing it the latlngs of the police stations.
-        HeatmapTileProvider mProvider = new HeatmapTileProvider.Builder().data(list).build();
-        // Add a tile overlay to the map, using the heat map tile provider.
-        TileOverlay mOverlay = mMap.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
-    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -102,6 +99,7 @@ public class SeeMapActivity extends FragmentActivity implements OnMapReadyCallba
             }
         });
 
-        addHeatMap();
+        HelperHero helper = new HelperHero();
+        helper.addHeatMap(this, mMap);
     }
 }

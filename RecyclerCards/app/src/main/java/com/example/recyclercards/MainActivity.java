@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
     Intent intent;
     Button viewHeroes;
     Button viewMap;
-    Button viewMap2;
+    Button parcel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +31,23 @@ public class MainActivity extends AppCompatActivity {
         viewMap.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 intent = new Intent(MainActivity.this,SeeMapActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        parcel = (Button) findViewById(R.id.button_parcelable);
+        parcel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Hero Ana = new Hero();
+                Ana.setPortrait(R.drawable.ana_portrait);
+                Ana.setName("Ana");
+                Ana.setRole("Supporter");
+                //Ana.setDifficulty_level("3");
+
+                intent = new Intent(MainActivity.this,Parcel.class);
+                Bundle myBundle = new Bundle();
+                myBundle.putParcelable("oak", Ana);
+                intent.putExtras(myBundle);
                 startActivity(intent);
             }
         });

@@ -46,7 +46,9 @@
             android:name=".SeeMapActivity"
             android:label="@string/title_activity_maps_activityxp" />
         <activity android:name=".BaseMapActivity" />
-        <activity android:name=".HeatMapActivity"></activity>
+        <activity android:name=".HeatMapActivity" />
+        <activity android:name=".Parcel" />
+        <activity android:name=".Damn"></activity>
     </application>
 
 </manifest>

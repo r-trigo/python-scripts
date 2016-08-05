@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="seenPeople">
+        <item>"Desde sempre"</item>
+        <item>"Último semestre"</item>
+        <item>"Último trimestre"</item>
+        <item>"Último mês"</item>
+        <item>"Última semana"</item>
+        <item>"Último dia"</item>
+        <item>"Última hora"</item>
+    </array>
+</resources>

@@ -48,7 +48,8 @@
         <activity android:name=".BaseMapActivity" />
         <activity android:name=".HeatMapActivity" />
         <activity android:name=".Parcel" />
-        <activity android:name=".Damn"></activity>
+        <activity android:name=".Damn" />
+        <activity android:name=".MultiCheckBoxChallenge"></activity>
     </application>
 
 </manifest>

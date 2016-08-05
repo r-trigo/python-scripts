@@ -23,7 +23,8 @@
         android:layout_height="wrap_content"
         android:text="Oak"
         android:id="@+id/button_oakable"
-        android:layout_below="@+id/editText_difficulty_level"
+        android:layout_marginTop="49dp"
+        android:layout_below="@+id/textView_segments"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -33,7 +34,8 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Segments"
         android:id="@+id/textView_segments"
-        android:layout_alignBottom="@+id/editText_difficulty_level"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/editText_difficulty_level"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="49dp" />
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.example.recyclercards;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -13,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     Button viewHeroes;
     Button viewMap;
     Button parcel;
+    Button checkBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,5 +54,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        checkBox = (Button) findViewById(R.id.button_checkBox);
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                intent = new Intent(MainActivity.this,MultiCheckBoxChallenge.class);
+                startActivity(intent);
+            }
+        });
     }
 }

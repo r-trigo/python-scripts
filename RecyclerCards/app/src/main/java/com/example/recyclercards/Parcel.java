@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +27,8 @@ public class Parcel extends AppCompatActivity {
         dl = (EditText) findViewById(R.id.editText_difficulty_level);
         segments = (TextView)findViewById(R.id.textView_segments);
 
+        final HelperHero myHelper = new HelperHero();
+
         TextWatcher watchmen = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -34,13 +37,11 @@ public class Parcel extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                int segmentsNumber = 1;
-                if (dl.getText().length() < 160) {
-                    segments.setText(dl.getText().length() + "/160, " + 1 + " segment");
-                } else {
-                    segmentsNumber = 1 + dl.getText().length()/160;
-                    segments.setText(dl.getText().length() + "/160, " + segmentsNumber + " segments");
-                }
+                String segmentOutput = myHelper.CharsCounter(dl.getText().toString());
+                segments.setText(segmentOutput);
+                int segmentsNumber = Integer.parseInt(String.valueOf(segmentOutput.charAt(segmentOutput.length()-13)));
+
+                Log.d("yo",""+segmentsNumber);
             }
 
             @Override

@@ -19,6 +19,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Seksu on 01/07/2016.
@@ -122,7 +126,7 @@ public class HelperHero {
         return GetJsonFromString(jsonString);
     }
 
-    public void addHeatMap (Context context, GoogleMap map) {
+    public void AddHeatMap(Context context, GoogleMap map) {
         // Get the data: latitude/longitude positions of police stations.
         ArrayList<LatLng> list = new ArrayList<>();
         try {
@@ -132,7 +136,7 @@ public class HelperHero {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] row = line.split(",");
-                LatLng spot = new LatLng(Float.parseFloat(row[0]),Float.parseFloat(row[1]));
+                LatLng spot = new LatLng(Float.parseFloat(row[0]), Float.parseFloat(row[1]));
                 list.add(spot);
             }
 
@@ -141,8 +145,60 @@ public class HelperHero {
             // Add a tile overlay to the map, using the heat map tile provider.
             TileOverlay mOverlay = map.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
 
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public int CountMatches(String text, String what_to_find) {
+        int count = 0;
+            for (int i = 0; i < text.length(); i++) {
+                for (int j = 0; j < what_to_find.length(); j++) {
+                    if (text.charAt(i) == what_to_find.charAt(j))
+                        count++;
+                }
+            }
+        return count;
+    }
+
+    public String CharsCounter(String written) {
+
+        String patternUCS2 = "^@£$¥èéùìòÇ\rØø\nÅåΔ_ΦΓΛΩΠΨΣΘΞÆæßÉ !\"#¤%&'()*+,-./0123456789:;<=>?¡ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÑÜ§¿abcdefghijklmnopqrstuvwxyzäöñüà~€\f\\^\\{\\}\\]\\[\\|\\\\";
+        int countUCS2 = CountMatches(written, patternUCS2);
+        String patternTableExtended = "~€\f\\^\\{\\}\\]\\[\\|\\\\";
+        int countTE = CountMatches(written, patternTableExtended);
+        int characters;
+        int charactersTotal;
+        int nrSMS;
+        boolean UCS2 = false;
+
+        int textLength = written.length();
+        characters = textLength;
+
+        if (countUCS2 < textLength) {
+            charactersTotal = textLength > 70 ? 67 : 70;
+        } else {
+            if (countTE > 0) {
+                characters = textLength + countTE;
+            }
+            UCS2 = true;
+            charactersTotal = characters > 160 ? 153 : 160;
+        }
+
+        if (characters > charactersTotal) {
+            int remainder = characters % charactersTotal;
+            int divisionRes = ((characters - remainder) / charactersTotal);
+
+            nrSMS = (remainder > 0 ? divisionRes + 1 : divisionRes);
+
+            charactersTotal = (nrSMS * charactersTotal);
+        } else {
+            nrSMS = 1;
+        }
+
+        String output = "NrCharacters: " + characters + ", NrCharactersTotal: " + charactersTotal +
+                ", NrSegments: " + nrSMS + ", UCS2: " + UCS2;
+
+        return output;
     }
 }

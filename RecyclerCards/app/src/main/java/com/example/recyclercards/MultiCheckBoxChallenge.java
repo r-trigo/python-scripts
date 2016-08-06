@@ -7,26 +7,30 @@ import android.widget.FrameLayout;
 
 public class MultiCheckBoxChallenge extends AppCompatActivity {
     private FrameLayout fl_seenPeople;
-    private boolean[] previousChecked;
-
-    /*@Override
-    public void onSelectedData(boolean[] previousChecked) {
-        this.previousChecked = previousChecked;
-    }*/
+    private FrameLayout fl_age;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multi_check_box_challenge);
 
-        //previousChecked = new boolean[]{true, true, true, true, true, true, true};
         //filter seen_people
         fl_seenPeople = (FrameLayout) findViewById(R.id.fl_seenPeople);
         fl_seenPeople.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChecksDialog cd = new ChecksDialog();
+                FilterSeenPeopleDialog cd = new FilterSeenPeopleDialog();
                 cd.show(getFragmentManager(),"CD");
+            }
+        });
+
+        //filter age
+        fl_age = (FrameLayout) findViewById(R.id.fl_age);
+        fl_age.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FilterAgeDialog ad = new FilterAgeDialog();
+                ad.show(getFragmentManager(),"AD");
             }
         });
     }

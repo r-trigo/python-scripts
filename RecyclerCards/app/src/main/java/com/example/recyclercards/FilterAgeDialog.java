@@ -12,32 +12,32 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class ChecksDialog extends DialogFragment {
+public class FilterAgeDialog extends DialogFragment {
 
-    private TextView textView_seenPeople;
+    private TextView textView_age;
     private SharedPreferences sharedPref;
 
     private boolean[] previousChecked;
-    private String[] seenPeople;
+    private String[] age;
     private ArrayList<Integer>  checkedItems;
-    private ArrayList<String> filter_seenPeople;
+    private ArrayList<String> filter_age;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         //Display
-        textView_seenPeople = (TextView) getActivity().findViewById(R.id.textView_seenPeople);
+        textView_age = (TextView) getActivity().findViewById(R.id.textView_age);
         //All choices array
-        seenPeople = getResources().getStringArray(R.array.seenPeople);
+        age = getResources().getStringArray(R.array.age);
         //Checkboxes previously checked
-        previousChecked = new boolean[seenPeople.length];
+        previousChecked = new boolean[age.length];
         //Checked items when hitting "CONFIRMAR"
         checkedItems = new ArrayList<>();
         //Choices chosen by user
-        filter_seenPeople = new ArrayList<>();
+        filter_age = new ArrayList<>();
 
         //Get previous choices
         final Context context = getActivity();
-        sharedPref = context.getSharedPreferences("fsp", Context.MODE_PRIVATE);
+        sharedPref = context.getSharedPreferences("fa", Context.MODE_PRIVATE);
         for (int i = 0; i < previousChecked.length; i++) {
             previousChecked[i] = sharedPref.getBoolean(""+i,false);
             if (previousChecked[i] == true) {
@@ -46,7 +46,7 @@ public class ChecksDialog extends DialogFragment {
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Pessoas ultimamente vistas").setMultiChoiceItems(R.array.seenPeople, previousChecked,
+        builder.setTitle("Pessoas ultimamente vistas").setMultiChoiceItems(R.array.age, previousChecked,
                 new DialogInterface.OnMultiChoiceClickListener() {
 
                     @Override
@@ -67,7 +67,7 @@ public class ChecksDialog extends DialogFragment {
 
                         //If the user checks none of the boxes, check all boxes again
                         if (checkedItems.size() == 0) {
-                            for (int i = 0; i < seenPeople.length; i++) {
+                            for (int i = 0; i < age.length; i++) {
                                 checkedItems.add(i);
                             }
                             Toast.makeText(context, "Não é permitido escolher 0 opções.", Toast.LENGTH_SHORT).show();
@@ -78,7 +78,7 @@ public class ChecksDialog extends DialogFragment {
                         for (int i = 0; i < previousChecked.length; i++) {
                             if (checkedItems.contains(i)) {
                                 previousChecked[i] = true;
-                                filter_seenPeople.add(seenPeople[i]);
+                                filter_age.add(age[i]);
                             } else {
                                 previousChecked[i] = false;
                             }
@@ -88,15 +88,15 @@ public class ChecksDialog extends DialogFragment {
                         editor.commit();
 
                         //Write in textview
-                        if (filter_seenPeople.size() == seenPeople.length) {
-                            textView_seenPeople.setText("Tudo");
+                        if (filter_age.size() == age.length) {
+                            textView_age.setText("Tudo");
                         } else {
-                            textView_seenPeople.setText("");
-                            for (int i = 0; i < filter_seenPeople.size(); i++) {
+                            textView_age.setText("");
+                            for (int i = 0; i < filter_age.size(); i++) {
                                 if (i != 0) {
-                                    textView_seenPeople.append(", ");
+                                    textView_age.append(", ");
                                 }
-                                textView_seenPeople.append(filter_seenPeople.get(i));
+                                textView_age.append(filter_age.get(i));
                             }
                         }
                     }
@@ -104,7 +104,7 @@ public class ChecksDialog extends DialogFragment {
                 .setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        ChecksDialog.this.getDialog().cancel();
+                        FilterAgeDialog.this.getDialog().cancel();
                     }
                 });
 

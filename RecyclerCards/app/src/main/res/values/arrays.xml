@@ -9,4 +9,12 @@
         <item>"Último dia"</item>
         <item>"Última hora"</item>
     </array>
+    <array name="age">
+        <item>"18-25 anos"</item>
+        <item>"26-35 anos"</item>
+        <item>"36-45 anos"</item>
+        <item>"46-60 anos"</item>
+        <item>">60 anos"</item>
+        <item>"N/D"</item>
+    </array>
 </resources>

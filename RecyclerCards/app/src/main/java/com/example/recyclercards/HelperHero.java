@@ -201,4 +201,9 @@ public class HelperHero {
 
         return output;
     }
+
+    public String[] SimpleSringToStringArray (String simpleString) {
+        String[] stringArray = simpleString.split(", ");
+        return stringArray;
+    }
 }

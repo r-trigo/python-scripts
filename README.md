@@ -1,3 +1,3 @@
-# estagiogowifi
+# python-exercises
 Exercícios de treino no estágio na Go Wi-Fi Aveiro
-Android, Python e Google App Engine
+Python e Google App Engine
